@@ -21,7 +21,12 @@ func TestController(t *testing.T) {
 		if err := json.NewDecoder(response.Body).Decode(&got); err != nil {
 			t.Fatal(err)
 		}
-		want := []Post{}
+		want := []Post{
+			Post{
+				[]string{"https://unsplash.com/photos/aADnEWskMII/download?w=640"},
+				[]string{"#tdd"},
+			},
+		}
 
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %q want %q", got, want)

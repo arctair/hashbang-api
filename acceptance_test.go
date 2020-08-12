@@ -39,7 +39,12 @@ func TestAcceptance(t *testing.T) {
 	err = json.NewDecoder(response.Body).Decode(&got)
 	assertNotError(t, err)
 
-	want := []Post{}
+	want := []Post{
+		Post{
+			[]string{"https://unsplash.com/photos/aADnEWskMII/download?w=640"},
+			[]string{"#tdd"},
+		},
+	}
 
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %q want %q", got, want)
