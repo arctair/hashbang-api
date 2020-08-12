@@ -1,4 +1,4 @@
-package main
+package main_test
 
 import (
 	"context"
@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"sync"
 	"testing"
+
+	. "arctair.com/hashbang"
 )
 
 func assertNotError(t *testing.T, err error) {
@@ -18,7 +20,7 @@ func assertNotError(t *testing.T, err error) {
 func TestAcceptance(t *testing.T) {
 	serverExit := &sync.WaitGroup{}
 	serverExit.Add(1)
-	server := startHTTPServer(serverExit)
+	server := StartHTTPServer(serverExit)
 
 	defer func() {
 		if err := server.Shutdown(context.TODO()); err != nil {

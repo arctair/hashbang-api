@@ -7,7 +7,8 @@ import (
 	"sync"
 )
 
-func startHTTPServer(wg *sync.WaitGroup) *http.Server {
+// StartHTTPServer ...
+func StartHTTPServer(wg *sync.WaitGroup) *http.Server {
 	server := &http.Server{Addr: ":5000"}
 
 	http.HandleFunc(
@@ -31,6 +32,6 @@ func startHTTPServer(wg *sync.WaitGroup) *http.Server {
 func main() {
 	serverExit := &sync.WaitGroup{}
 	serverExit.Add(1)
-	startHTTPServer(serverExit)
+	StartHTTPServer(serverExit)
 	serverExit.Wait()
 }
