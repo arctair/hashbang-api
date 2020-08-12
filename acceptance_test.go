@@ -2,8 +2,10 @@ package main_test
 
 import (
 	"context"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"reflect"
 	"sync"
 	"testing"
 
@@ -37,10 +39,12 @@ func TestAcceptance(t *testing.T) {
 	bodyAsBytes, err := ioutil.ReadAll(response.Body)
 	assertNotError(t, err)
 
-	got := string(bodyAsBytes)
-	want := "Hello world"
+	var got []Post
+	err = json.Unmarshal(bodyAsBytes, &got)
+	assertNotError(t, err)
+	want := []Post{}
 
-	if got != want {
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %q want %q", got, want)
 	}
 }
