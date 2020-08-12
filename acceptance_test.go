@@ -3,7 +3,6 @@ package main_test
 import (
 	"context"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"reflect"
 	"sync"
@@ -35,13 +34,11 @@ func TestAcceptance(t *testing.T) {
 	response, err := http.Get("http://localhost:5000/")
 	assertNotError(t, err)
 
+	var got []Post
 	defer response.Body.Close()
-	bodyAsBytes, err := ioutil.ReadAll(response.Body)
+	err = json.NewDecoder(response.Body).Decode(&got)
 	assertNotError(t, err)
 
-	var got []Post
-	err = json.Unmarshal(bodyAsBytes, &got)
-	assertNotError(t, err)
 	want := []Post{}
 
 	if !reflect.DeepEqual(got, want) {
