@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hashbang
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  tls:
+  - hosts:
+    - hashbang.arctair.com
+    secretName: hashbang-tls
+  rules:
+  - host: hashbang.arctair.com
+    http:
+      paths:
+      - backend:
+          serviceName: hashbang
+          servicePort: 5000
