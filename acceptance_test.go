@@ -22,7 +22,7 @@ func assertNotError(t *testing.T, err error) {
 func TestAcceptance(t *testing.T) {
 	baseUrl := os.Getenv("BASE_URL")
 	if baseUrl == "" {
-		baseUrl = "https://localhost:5000/"
+		baseUrl = "http://localhost:5000/"
 
 		serverExit := &sync.WaitGroup{}
 		serverExit.Add(1)
