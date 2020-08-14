@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"os"
 	"reflect"
 	"sync"
 	"testing"
@@ -19,19 +20,24 @@ func assertNotError(t *testing.T, err error) {
 }
 
 func TestAcceptance(t *testing.T) {
-	serverExit := &sync.WaitGroup{}
-	serverExit.Add(1)
-	server := StartHTTPServer(serverExit)
+	baseUrl := os.Getenv("BASE_URL")
+	if baseUrl == "" {
+		baseUrl = "https://localhost:5000/"
 
-	defer func() {
-		if err := server.Shutdown(context.TODO()); err != nil {
-			panic(err)
-		}
+		serverExit := &sync.WaitGroup{}
+		serverExit.Add(1)
+		server := StartHTTPServer(serverExit)
 
-		serverExit.Wait()
-	}()
+		defer func() {
+			if err := server.Shutdown(context.TODO()); err != nil {
+				panic(err)
+			}
 
-	response, err := http.Get("http://localhost:5000/")
+			serverExit.Wait()
+		}()
+	}
+
+	response, err := http.Get(baseUrl)
 	assertNotError(t, err)
 
 	var got []Post

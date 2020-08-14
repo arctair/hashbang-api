@@ -9,6 +9,10 @@ or
 ```
 $ nodemon
 ```
+### Run the tests against a deployment
+```
+$ BASE_URL=https://hashbang.arctair.com go test
+```
 ## Run the server
 ```
 $ go run .
